@@ -79,6 +79,6 @@ tauth=$(echo "$tauth" | sed -e 's/<[^>]*>//g')
 echo "$tauth"
 echo "$tauth" | while read tname
 do
-    echo "$tname"
-    cat ~/0author.txt | grep "$tname "
+    echo "> $tname"
+    cat ~/0author.txt | grep "^$tname "
 done
