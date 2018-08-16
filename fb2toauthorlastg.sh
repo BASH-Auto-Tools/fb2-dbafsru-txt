@@ -80,5 +80,5 @@ echo "$tauth"
 echo "$tauth" | while read tname
 do
     echo "> $tname"
-    cat ~/0author.txt | grep "^$tname "
+    cat ~/0author.txt | grep -i "^$tname "
 done
