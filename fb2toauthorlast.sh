@@ -15,7 +15,7 @@ tcomp="file"
 [ ! "$(command -v $tcomp)" ] && tnocomp="$tnocomp $tcomp"
 tcomp="unzip"
 [ ! "$(command -v $tcomp)" ] && tnocomp="$tnocomp $tcomp"
-tcomp="zcat"
+tcomp="gzip"
 [ ! "$(command -v $tcomp)" ] && tnocomp="$tnocomp $tcomp"
 if [ "+$tnocomp" != "+" ]
 then
@@ -67,13 +67,12 @@ fi
 
 fcompr=$(file -b -i  "$src")
 [ "x$fzip" = "xtrue" ] && fcompr="application/zip; charset=binary"
-[ "x$fgzip" = "xtrue" ] && fcompr="application/gzip; charset=binary"
 
 if [ "x$fcompr" = "xapplication/zip; charset=binary" ]
 then
     tauth=$(unzip -c "$src" | sed -n -e '/<description>/,/<\/description>/p' | sed -n -e '/<title-info>/,/<\/title-info>/p' | sed -e 's/\x0D$//' | sed -e 's/<author>/\n&\n/g;s/<\/author>/\n&\n/g' | sed -n -e '/<author>/,/<\/author>/p' | sed -n -e '/<last-name>.*<\/last-name>/p')
 else
-    tauth=$(zcat "$src" | sed -n -e '/<description>/,/<\/description>/p' | sed -n -e '/<title-info>/,/<\/title-info>/p' | sed -e 's/\x0D$//' | sed -e 's/<author>/\n&\n/g;s/<\/author>/\n&\n/g' | sed -n -e '/<author>/,/<\/author>/p' | sed -n -e '/<last-name>.*<\/last-name>/p')
+    tauth=$(gzip -cdf "$src" | sed -n -e '/<description>/,/<\/description>/p' | sed -n -e '/<title-info>/,/<\/title-info>/p' | sed -e 's/\x0D$//' | sed -e 's/<author>/\n&\n/g;s/<\/author>/\n&\n/g' | sed -n -e '/<author>/,/<\/author>/p' | sed -n -e '/<last-name>.*<\/last-name>/p')
 fi
 tauth=$(echo "$tauth" | sed -e 's/<[^>]*>//g')
 if [ -z "$dst" ]
