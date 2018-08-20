@@ -71,7 +71,7 @@ then
 else
     tauth=$(gzip -cdf "$src" | sed -n -e '/<description>/,/<\/description>/p' | sed -n -e '/<title-info>/,/<\/title-info>/p' | sed -e 's/\x0D$//' | sed -n -e '/<author>/,/<\/author>/p' | sed -e 's/<author>//;s/<\/author>/ /' | sed -e :a -e '/>$/N; s/\n//; ta' | sed -e '/^ *$/d;' | sed -e 's/\(^.*\)\(<last-name>.*<\/last-name>\)/\2\1/' | sed -e 's/> *</></g')
 fi
-tauth=$(echo "$tauth" | sed -e 's/<[^>]*>/ /g' | sed -e 's/^ *//g;s/ *$//g;s/  / /g;')
+tauth=$(echo "$tauth" | sed -e 's/<[^>]*>/ /g' | sed -e 's/\x0D$//;s/^ *//g;s/ *$//g;s/  / /g;s/  / /g;s/  / /g;s/  / /g;')
 echo "$tauth" | sort -u | while read tname
 do
     ttest=$(cat ~/0author.txt | grep -i "^$tname ")
