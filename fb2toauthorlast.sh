@@ -70,9 +70,9 @@ fcompr=$(file -b -i  "$src")
 
 if [ "x$fcompr" = "xapplication/zip; charset=binary" ]
 then
-    tauth=$(unzip -c "$src" | sed -n -e '/<description>/,/<\/description>/p' | sed -n -e '/<title-info>/,/<\/title-info>/p' | sed -e 's/\x0D$//' | sed -e 's/<author>/\n&\n/g;s/<\/author>/\n&\n/g' | sed -n -e '/<author>/,/<\/author>/p' | sed -n -e '/<last-name>.*<\/last-name>/p')
+    tauth=$(unzip -c "$src" | sed -n -e '/<description/,/<\/description>/p' | sed -n -e '/<title-info>/,/<\/title-info>/p' | sed -e 's/\x0D$//' | sed -e 's/<author>/\n&\n/g;s/<\/author>/\n&\n/g' | sed -n -e '/<author>/,/<\/author>/p' | sed -n -e '/<last-name>.*<\/last-name>/p')
 else
-    tauth=$(gzip -cdf "$src" | sed -n -e '/<description>/,/<\/description>/p' | sed -n -e '/<title-info>/,/<\/title-info>/p' | sed -e 's/\x0D$//' | sed -e 's/<author>/\n&\n/g;s/<\/author>/\n&\n/g' | sed -n -e '/<author>/,/<\/author>/p' | sed -n -e '/<last-name>.*<\/last-name>/p')
+    tauth=$(gzip -cdf "$src" | sed -n -e '/<description/,/<\/description>/p' | sed -n -e '/<title-info>/,/<\/title-info>/p' | sed -e 's/\x0D$//' | sed -e 's/<author>/\n&\n/g;s/<\/author>/\n&\n/g' | sed -n -e '/<author>/,/<\/author>/p' | sed -n -e '/<last-name>.*<\/last-name>/p')
 fi
 tauth=$(echo "$tauth" | sed -e 's/<[^>]*>//g')
 if [ -z "$dst" ]
